@@ -1,0 +1,117 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+.container {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(68, 56, 56, 0.2);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+input[type="file"] {
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #1a73e8;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #1a73e8;
+}
+
+button:hover {
+  background-color: white;
+  border-color: #1a73e8;
+  color: #1a73e8;
+}
+
+#result {
+  margin-top: 20px;
+}
+
+.inputUpload label {
+  border: 2px dotted gray;
+  height: 100px;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: gray;
+  cursor: pointer;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.inputUpload label:hover {
+  border-color: black;
+  color: black;
+}
+
+.hide {
+  display: none;
+}
+
+
+body {
+  position: relative;
+  overflow: hidden;
+}
+
+#particles-js {
+  position: fixed;
+  ;
+  height: 100%;
+  top: 0;
+  right: 0;
+  background-color: #bababa;
+  width: 100%;
+  z-index: -1;
+}
+
+.fileUploaded div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid gray;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.fileUploaded span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.fileUploaded p {
+  font-size: 16px;
+  margin: 0;
+}
+
+.deleteBtn {
+  background-color: red;
+  border: none;
+}
+
+.deleteBtn:hover {
+  background-color: red;
+  color: white;
+}

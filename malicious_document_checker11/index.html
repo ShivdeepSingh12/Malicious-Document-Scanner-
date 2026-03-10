@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Malicious Document Checker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="particles-js"></div>
+  <div class="container">
+    <h1>Malicious Document Checker</h1>
+    <form id="scanForm">
+      <div class="inputUpload">
+        <label for="fileInput">Click to Upload File</label>
+        <input type="file" id="fileInput" required class="hide" />
+      </div>
+      <div class="fileUploaded hide">
+        <div>
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
+              class="icon icon-tabler icons-tabler-filled icon-tabler-file-description">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005zm3 14h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2m0 -4h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2" />
+              <path d="M19 7h-4l-.001 -4.001z" />
+            </svg>
+            <p>FileName.pdf</p>
+          </span>
+          <button class="deleteBtn">
+            X
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="">Scan File</button>
+    </form>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('scanForm');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+      if (!file) {
+        alert("Please select a file.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      resultDiv.innerHTML = "Scanning...";
+
+      try {
+        const response = await fetch('/scan', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+        if (data.error) {
+          resultDiv.innerHTML = `Error: ${data.error}`;
+        } else {
+          resultDiv.innerHTML = `
+            <h3>Scan Results:</h3>
+            <p><strong>File:</strong> ${file.name}</p>
+            <p><strong>Malicious:</strong> ${data.malicious ? 'Yes' : 'No'}</p>
+            
+          `;
+        }
+      } catch (err) {
+        resultDiv.innerHTML = "An error occurred during the scan.";
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <!-- Particles.js config -->
+  <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#ffffff"
+        },
+        "shape": {
+          "type": "circle"
+        },
+        "opacity": {
+          "value": 0.5
+        },
+        "size": {
+          "value": 3
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ffffff",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 2
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          }
+        },
+        "modes": {
+          "repulse": {
+            "distance": 100
+          },
+          "push": {
+            "particles_nb": 4
+          }
+        }
+      },
+      "retina_detect": true
+    });
+  </script>
+
+
+  <script>
+    const fileInput = document.getElementById("fileInput");
+    const inputUpload = document.querySelector(".inputUpload");
+    const fileUploaded = document.querySelector(".fileUploaded");
+    const fileNameElement = document.querySelector(".fileUploaded p");
+    const deleteBtn = document.querySelector(".deleteBtn");
+
+
+
+    fileInput.addEventListener("change", function () {
+      if (fileInput.files.length > 0) {
+        const fileName = fileInput.files[0].name;
+        fileNameElement.textContent = fileName;
+        inputUpload.classList.add("hide");
+        fileUploaded.classList.remove("hide");
+      }
+    });
+
+    deleteBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      fileInput.value = "";
+      fileUploaded.classList.add("hide");
+      inputUpload.classList.remove("hide");
+    });
+  </script>
+
+
+</body>
+
+</html>
